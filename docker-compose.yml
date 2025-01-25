@@ -1,0 +1,19 @@
+  services:
+    mysql:
+      container_name: E-Learning-sql
+      image: mysql:latest
+      environment:
+        MYSQL_ROOT_PASSWORD: ala
+        MYSQL_DATABASE: E-Learning
+      volumes:
+        - ../E-Learning-mysql:/var/lib/mysql
+      ports:
+        - "3307:3306"
+        #default port of my sql is 3306and the first one is the port that the  machine will listen to !!
+      networks:
+        - spring-demo
+      restart: unless-stopped
+
+  networks:
+      spring-demo:
+        driver: bridge

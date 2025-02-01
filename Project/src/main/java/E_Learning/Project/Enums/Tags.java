@@ -1,5 +1,5 @@
 package E_Learning.Project.Enums;
 
 public enum Tags {
-    String,Greedy,Math
+    String,Greedy,Math,Array,HashTable
 }

@@ -21,17 +21,10 @@ public class Problem {
     private String description;
     private List<Tags> tags;
     private String difficulty;
-    /*private   String inputFormat;
-    private  String outputFormat;*/
-    private List<String> examples;
+    private String mainClass;
 
-    public String getLinkToProgram() {
-        return linkToProgram;
-    }
 
-    public void setLinkToProgram(String linkToProgram) {
-        this.linkToProgram = linkToProgram;
-    }
+
 
     public String getLinkTotestcases() {
         return linkTotestcases;
@@ -42,18 +35,16 @@ public class Problem {
     }
 
     private   String linkTotestcases;
-    private  String linkToProgram;
 
-    public List<String> getExamples() {
-        return examples;
+    public String getMainClass() {
+        return mainClass;
     }
 
-    public void setExamples(List<String> examples) {
-        this.examples = examples;
+    public void setMainClass(String mainClass) {
+        this.mainClass = mainClass;
     }
 
     @ElementCollection
-    //private  List<TestCase> testCases;
 
     public Integer getId() {
         return id;
@@ -95,28 +86,9 @@ public class Problem {
         this.difficulty = difficulty;
     }
 
-  /*  public String getInputFormat() {
-        return inputFormat;
-    }
 
-    public void setInputFormat(String inputFormat) {
-        this.inputFormat = inputFormat;
-    }
 
-    public String getOutputFormat() {
-        return outputFormat;
-    }
 
-    public void setOutputFormat(String outputFormat) {
-        this.outputFormat = outputFormat;
-    }*/
 
-  /*  public List<TestCase> getTestCases() {
-        return testCases;
-    }
-
-    public void setTestCases(List<TestCase> testCases) {
-        this.testCases = testCases;
-    }*/
 }
 

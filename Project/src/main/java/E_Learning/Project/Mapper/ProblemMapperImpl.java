@@ -13,9 +13,8 @@ public class ProblemMapperImpl implements ProblemMapper{
                 .description(problem.getDescription())
                 .tags(problem.getTags())
                 .difficulty(problem.getDifficulty())
-                .examples(problem.getExamples())
                 .linkTotestcases(problem.getLinkTotestcases())
-                .linkToProgram(problem.getLinkToProgram())
+                .mainClass(problem.getMainClass())
 
 
                 .build();

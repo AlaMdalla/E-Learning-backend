@@ -11,20 +11,18 @@ public class ProblemDto {
     private String description;
     private List<Tags> tags;
     private String difficulty;
-    private List<String> examples;
     private   String linkTotestcases;
-    private  String linkToProgram;
+    private String mainClass;
 
-    // Private constructor for the builder
     private ProblemDto(Builder builder) {
         this.id = builder.id;
         this.title = builder.title;
         this.description = builder.description;
         this.tags = builder.tags;
         this.difficulty = builder.difficulty;
-        this.examples = builder.examples;
         this.linkTotestcases=builder.linkTotestcases;
-        this.linkToProgram=builder.linkToProgram;
+        this.mainClass=builder.mainClass;
+
     }
 
     // Getters
@@ -48,24 +46,16 @@ public class ProblemDto {
         return difficulty;
     }
 
-    public List<String> getExamples() {
-        return examples;
-    }
 
-    public void setExamples(List<String> examples) {
-        this.examples = examples;
-    }
 
-    // Static Builder Class
     public static class Builder {
         private Integer id;
         private String title;
         private String description;
         private List<Tags> tags;
         private String difficulty;
-        private List<String> examples;
         private   String linkTotestcases;
-        private  String linkToProgram;
+        private String mainClass;
 
         public Builder id(Integer id) {
             this.id = id;
@@ -75,10 +65,11 @@ public class ProblemDto {
             this.linkTotestcases = linkTotestcases;
             return this;
         }
-        public Builder linkToProgram(String linkToProgram) {
-            this.linkToProgram = linkToProgram;
+        public Builder mainClass(String mainClass) {
+            this.mainClass = mainClass;
             return this;
         }
+
 
         public Builder title(String title) {
             this.title = title;
@@ -100,10 +91,7 @@ public class ProblemDto {
             return this;
         }
 
-        public Builder examples(List<String> examples) {
-            this.examples = examples;
-            return this;
-        }
+
 
         public ProblemDto build() {
             return new ProblemDto(this);

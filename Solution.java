@@ -1,9 +1,22 @@
-public class Solution {public static int sum(int a, int b) {
-    return a + b ;
-}
-        public static void main(String[] args) {
-            int a = Integer.parseInt(args[0]);
-            int b = Integer.parseInt(args[1]);
-            System.out.println(sum(a, b));
-        }
+public class Solution {public static int[] twoSum(int[] nums, int target) {
+                      for (int i = 0; i < nums.length; i++) {
+                          for (int j = i + 1; j < nums.length; j++) {
+                              if (nums[i] + nums[j] == target) {
+                                  return new int[]{i+1, j};
+                              }
+                          }
+                      }
+                      return new int[]{-1, -1};
+                  }
+public static void main(String[] args) {
+    int target = Integer.parseInt(args[1]);
+    String[] strNumbers = args[0].split(" ");
+    int[] nums = new int[strNumbers.length];
+    for (int i = 0; i < strNumbers.length; i++) {
+        nums[i] = Integer.parseInt(strNumbers[i].trim());
+        //  System.out.println("nums: " + nums[i] );
     }
+    int[] result = twoSum(nums,target);
+    System.out.println("Indices: " + result[0] + ", " + result[1]);
+
+}    }

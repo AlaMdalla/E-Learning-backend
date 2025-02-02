@@ -4,26 +4,45 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class CodeRunner {
+    //put this in a service
     private static final String FILE_NAME = "Solution.java";
     private static final String TESTCASE_FILE = "testcases.txt";
     private static final String CLASS_NAME = "Solution";
+    private static  String pathToMain ="";
+private  static String usercode0 =" "  ;
+    public CodeRunner(String pathToMain,String usercode0 ) {
+        this.pathToMain = pathToMain;
+        System.out.println("pathto "+usercode0);
+        this.usercode0=usercode0;
+        this.main();
+    }
 
-    public static void main(String[] args) {
-        String usercode0 = """
-                public static int sum(int a, int b) {
-                    return a + b ;
-                }""";
+
+    public static String readFileContent(String filePath) throws IOException {
+        Path path = Paths.get(filePath);
+
+        return Files.readString(path);
+
+    }
+    public  void main() {
+
+
+
+        String   mainClass ="";
+        try {
+               mainClass = readFileContent(pathToMain);  // Specify the correct file path
+        } catch (IOException e) {
+            System.out.println("t3adechfile");
+            e.printStackTrace();
+        }        ;
         String userCode = """
-            public class Solution {""" + usercode0 + """
-
-                public static void main(String[] args) {
-                    int a = Integer.parseInt(args[0]);
-                    int b = Integer.parseInt(args[1]);
-                    System.out.println(sum(a, b));
-                }
+            public class Solution {""" + usercode0 + mainClass+"""
             }
         """;
 
@@ -52,19 +71,28 @@ public class CodeRunner {
 
     public static boolean compileJavaFile() throws IOException, InterruptedException {
         Process process = Runtime.getRuntime().exec("javac " + FILE_NAME);
+
+        System.out.println(process.getErrorStream());
         return process.waitFor() == 0;
     }
 
-    public static void runTestCases() throws IOException {
+    public static String runTestCases() throws IOException {
         List<String> testCases = readTestCasesFromFile(TESTCASE_FILE);
         boolean testPassed = true;
 
         for (String testCase : testCases) {
-            String[] parts = testCase.split(",");
-            String[] inputs = Arrays.copyOfRange(parts, 0, parts.length - 1);
-            String expectedResult = parts[parts.length - 1].trim().toString();
+            String[] parts = testCase.split("\\|"); // Split by '|'
 
-            String args = String.join(" ", inputs).trim();
+            if (parts.length < 2) {
+                System.out.println("❌ Invalid test case format: " + testCase);
+                continue;
+            }
+
+            String inputValues = parts[0].trim(); // Inputs
+            String expectedResult = parts[1].trim(); // Expected output
+
+            String[] inputArray = inputValues.split(","); // Split inputs by ','
+            String args = String.join(" ", inputArray).trim(); // Convert to space-separated format
 
             Process process = Runtime.getRuntime().exec("java " + CLASS_NAME + " " + args);
 
@@ -82,9 +110,9 @@ public class CodeRunner {
         }
 
         if (testPassed) {
-            System.out.println("✅ All test cases passed!");
+            return  "✅ All test cases passed!" ;
         } else {
-            System.out.println("Some test cases failed. Please check the code.");
+            return "Some test cases failed. Please check the code.";
         }
     }
 

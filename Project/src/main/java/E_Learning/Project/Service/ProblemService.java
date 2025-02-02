@@ -8,4 +8,6 @@ import java.util.List;
 public interface ProblemService {
     public ProblemDto addProblem(Problem problem);
     public List<Problem> getProblems();
+    public Problem getProblem( Integer id);
+
 }

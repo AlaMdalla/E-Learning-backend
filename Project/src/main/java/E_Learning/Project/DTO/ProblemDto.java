@@ -1,5 +1,6 @@
 package E_Learning.Project.DTO;
 
+import E_Learning.Project.Entity.Submition;
 import E_Learning.Project.Entity.TestCase;
 import E_Learning.Project.Enums.Tags;
 
@@ -13,6 +14,7 @@ public class ProblemDto {
     private String difficulty;
     private   String linkTotestcases;
     private String mainClass;
+    private  List<Submition> submitions;
 
     private ProblemDto(Builder builder) {
         this.id = builder.id;
@@ -56,6 +58,7 @@ public class ProblemDto {
         private String difficulty;
         private   String linkTotestcases;
         private String mainClass;
+        private  List<Submition> submitions;
 
         public Builder id(Integer id) {
             this.id = id;
@@ -83,6 +86,10 @@ public class ProblemDto {
 
         public Builder tags(List<Tags> tags) {
             this.tags = tags;
+            return this;
+        }
+        public Builder submitions(List<Submition> submitions) {
+            this.submitions = submitions;
             return this;
         }
 

@@ -7,11 +7,13 @@ public class ProblemMapperImpl implements ProblemMapper{
     @Override
     public ProblemDto toDto(Problem problem) {
 
+
         ProblemDto problemDto = new ProblemDto.Builder()
                 .id(problem.getId())
                 .title(problem.getTitle())
                 .description(problem.getDescription())
                 .tags(problem.getTags())
+                .submitions(problem.getSubmitions())
                 .difficulty(problem.getDifficulty())
                 .linkTotestcases(problem.getLinkTotestcases())
                 .mainClass(problem.getMainClass())

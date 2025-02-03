@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @NoArgsConstructor
@@ -17,11 +18,48 @@ public class Problem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  Integer id;
+
+    public List<Submition> getSubmitions() {
+        return submitions;
+    }
+
     private String title;
     private String description;
     private List<Tags> tags;
     private String difficulty;
     private String mainClass;
+    @OneToMany(mappedBy = "problem")
+
+    private  List<Submition> submitions;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

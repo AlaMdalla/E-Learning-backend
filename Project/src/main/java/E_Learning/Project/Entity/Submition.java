@@ -1,6 +1,7 @@
 package E_Learning.Project.Entity;
 
 import E_Learning.Project.DTO.ProblemDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,6 +21,7 @@ public class Submition {
     }
 
     private boolean passed  ;
+    @JsonIgnore
     @ManyToOne
     private  Problem problem;
     public Submition(/* parameters */) {

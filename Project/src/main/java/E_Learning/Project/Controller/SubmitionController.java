@@ -3,8 +3,7 @@ package E_Learning.Project.Controller;
 import E_Learning.Project.CodeRunner;
 import E_Learning.Project.Entity.Problem;
 import E_Learning.Project.Entity.Submition;
-import E_Learning.Project.Service.ProblemService;
-import E_Learning.Project.Service.SubmitionService;
+import E_Learning.Project.Service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +14,9 @@ import java.util.List;
 @RequestMapping("/submition")
 public class SubmitionController {
     private SubmitionService submitionService;
+    FileReaderService fileReaderService = new FileReaderServiceImpl();
+    CodeCompiler codeCompiler = new CodeCompilerJavaImpl();
+    TestCaseExecutor testCaseExecutor = new TestCaseExecutorJavaImpl();
 
     public SubmitionController(SubmitionService submitionService, ProblemService problemService) {
         this.submitionService = submitionService;
@@ -29,7 +31,8 @@ public class SubmitionController {
         Submition submition =new Submition();
         Problem problem = this.submitionService.submitProblem(submition,problemId);
         String mainClass = problem.getMainClass();
-        CodeRunner codeRunner =new CodeRunner(mainClass,code);
+        CodeRunner codeRunner = new CodeRunner(fileReaderService, codeCompiler, testCaseExecutor);
+        codeRunner.run(mainClass,code);
         try {
             List<Submition> submissions = problem.getSubmitions();
             if (submissions != null && !submissions.isEmpty()) {
@@ -38,14 +41,14 @@ public class SubmitionController {
                 submition.setId(lastSubmitionId);
             }
 
-if(codeRunner.runTestCases().equals("✅ All test cases passed!")){
+if(codeRunner.result.equals("✅ All test cases passed!")){
     System.out.println("eeeeeeeeeeeeeeeeeeeeeee"+submition.getId());
     submition.setPassed(true);
-    submition =  this.submitionService.Update(submition,152);
+    submition =  this.submitionService.Update(submition,submition.getId());
 }
             return ResponseEntity.status(HttpStatus.OK)
                     .header("Content-Type", "text/plain")
-                    .body(codeRunner.runTestCases());
+                    .body(codeRunner.result);
 
         }catch (Exception exception)
         {

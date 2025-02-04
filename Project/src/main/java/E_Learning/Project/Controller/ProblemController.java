@@ -4,7 +4,7 @@ import E_Learning.Project.CodeRunner;
 import E_Learning.Project.DTO.ProblemDto;
 import E_Learning.Project.Entity.Problem;
 import E_Learning.Project.Enums.Tags;
-import E_Learning.Project.Service.ProblemService;
+import E_Learning.Project.Service.*;
 import jakarta.persistence.*;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
@@ -18,6 +18,9 @@ import java.util.List;
 public class ProblemController {
 
 private ProblemService problemService;
+    FileReaderService fileReaderService = new FileReaderServiceImpl();
+    CodeCompiler codeCompiler = new CodeCompilerJavaImpl();
+    TestCaseExecutor testCaseExecutor = new TestCaseExecutorJavaImpl();
 
     public ProblemController(ProblemService problemService) {
         this.problemService = problemService;
@@ -33,12 +36,15 @@ private ProblemService problemService;
     @PostMapping("/submit")
     ResponseEntity submitProblem(@RequestBody String code){
   String mainClass =this.problemService.getProblem(352).getMainClass();
-        CodeRunner codeRunner =new CodeRunner(mainClass,code);
+        CodeRunner codeRunner = new CodeRunner(fileReaderService, codeCompiler, testCaseExecutor);
+        codeRunner.run(mainClass,code);
+
+      //  CodeRunner codeRunner =new CodeRunner(mainClass,code);
        try {
 
            return ResponseEntity.status(HttpStatus.OK)
                    .header("Content-Type", "text/plain")
-                   .body(codeRunner.runTestCases());
+                   .body(codeRunner.result);
 
        }catch (Exception exception)
        {

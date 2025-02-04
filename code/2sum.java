@@ -1,5 +1,3 @@
-
-
 public static void main(String[] args) {
     int target = Integer.parseInt(args[1]);
     String[] strNumbers = args[0].split(" ");

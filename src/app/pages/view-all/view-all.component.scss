@@ -1,0 +1,41 @@
+.card-container {
+    max-width: 60%;
+    margin: 20px auto; /* Utilise auto pour centrer horizontalement */
+    padding-bottom: 30px;
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+}
+mat-card{
+    padding: 10px;
+    position: relative; /* Permet au bouton d'être positionné par rapport à la carte */
+    padding: 10px;
+}
+.avatar-container {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+mat-card-footer{
+    margin-left: 20px;
+}
+.post-img{
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    margin-top: 15px;
+}
+.close-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+

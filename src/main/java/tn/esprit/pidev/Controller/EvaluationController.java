@@ -19,15 +19,14 @@ public class EvaluationController {
         this.evaluationService = evaluationService;
     }
 
-    // GET ALL Evaluations
+    // http://localhost:8089/e-learning/evaluation/retrieve-all
     @GetMapping("/retrieve-all")
     public ResponseEntity<List<Evaluation>> getAllEvaluations() {
         return new ResponseEntity<>(evaluationService.getAllEvaluations(), HttpStatus.OK);
     }
-
-    // GET Evaluation by ID
-    @GetMapping("/retrieve/{id}")
-    public ResponseEntity<Evaluation> getEvaluationById(@PathVariable("id") int idEvaluation) {
+    // http://localhost:8089/e-learning/evaluation//retrieve/{idEvaluation}
+    @GetMapping("/retrieve/{idEvaluation}")
+    public ResponseEntity<Evaluation> getEvaluationById(@PathVariable("idEvaluation") int idEvaluation) {
         Evaluation evaluation = evaluationService.getEvaluationById(idEvaluation);
         if (evaluation != null) {
             return new ResponseEntity<>(evaluation, HttpStatus.OK);
@@ -37,12 +36,14 @@ public class EvaluationController {
     }
 
     // ADD Evaluation
+    // http://localhost:8089/e-learning/evaluation/add
     @PostMapping("/add")
     public ResponseEntity<Evaluation> addEvaluation(@RequestBody Evaluation evaluation) {
         return new ResponseEntity<>(evaluationService.addEvaluation(evaluation), HttpStatus.CREATED);
     }
 
     // UPDATE Evaluation
+    // http://localhost:8089/e-learning/evaluation/update/idEvaluation
     @PutMapping("/update/{idEvaluation}")
     public ResponseEntity<Evaluation> updateEvaluation(@PathVariable("idEvaluation") int idEvaluation, @RequestBody Evaluation evaluation) {
         Evaluation updatedEvaluation = evaluationService.updateEvaluation(idEvaluation, evaluation);
@@ -53,13 +54,10 @@ public class EvaluationController {
         }
     }
 
-    // DELETE Evaluation
+   
     @DeleteMapping("/delete/{idEvaluation}")
     public ResponseEntity<Void> deleteEvaluation(@PathVariable("idEvaluation") int idEvaluation) {
         evaluationService.deleteEvaluation(idEvaluation);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-
-
-

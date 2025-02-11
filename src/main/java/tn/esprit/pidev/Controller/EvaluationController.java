@@ -54,7 +54,7 @@ public class EvaluationController {
         }
     }
 
-   
+
     @DeleteMapping("/delete/{idEvaluation}")
     public ResponseEntity<Void> deleteEvaluation(@PathVariable("idEvaluation") int idEvaluation) {
         evaluationService.deleteEvaluation(idEvaluation);

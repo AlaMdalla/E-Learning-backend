@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ITrainingService
 { List<Training> getAllTrainings();
-    Training getTrainingById(Long id);
+    Training getTrainingById(int idTraining);
     Training saveTraining(Training training);
-    void deleteTraining(Long id);
+    void deleteTraining(int idTraining);
 }

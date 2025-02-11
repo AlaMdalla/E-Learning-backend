@@ -16,29 +16,23 @@ public class TrainingServiceImp implements ITrainingService
     }
 
 
+    @Override
     public List<Training> getAllTrainings() {
-        return trainingRepository.findAll();
+        return List.of();
     }
 
     @Override
-    public Training getTrainingById(Long id) {
+    public Training getTrainingById(int idTraining) {
         return null;
     }
 
-    public Training getTrainingById(int idTraining) {
-        return trainingRepository.findById(idTraining).orElse(null);
-    }
-
+    @Override
     public Training saveTraining(Training training) {
-        return trainingRepository.save(training);
+        return null;
     }
 
     @Override
-    public void deleteTraining(Long id) {
-
-    }
-
     public void deleteTraining(int idTraining) {
-        trainingRepository.deleteById(idTraining);
+
     }
 }

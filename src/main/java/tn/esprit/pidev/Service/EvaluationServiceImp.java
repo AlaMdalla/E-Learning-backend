@@ -14,23 +14,24 @@ public class EvaluationServiceImp implements IEvaluationService{
         this.evaluationRepository = evaluationRepository;
     }
 
+
     @Override
     public Evaluation addEvaluation(Evaluation evaluation) {
         return null;
     }
 
     @Override
-    public Evaluation updateEvaluation(int id, Evaluation evaluation) {
+    public Evaluation updateEvaluation(int idEvaluation, Evaluation evaluation) {
         return null;
     }
 
     @Override
-    public void deleteEvaluation(int id) {
+    public void deleteEvaluation(int idEvaluation) {
 
     }
 
     @Override
-    public Evaluation getEvaluationById(int id) {
+    public Evaluation getEvaluationById(int idEvaluation) {
         return null;
     }
 

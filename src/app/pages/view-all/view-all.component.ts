@@ -9,44 +9,39 @@ import { PostService } from 'src/app/service/post.service';
 })
 export class ViewAllComponent {
   avatar: any;
-  allPosts : any;
-  
-  constructor(private postService:PostService, private snackBar: MatSnackBar)
-  {}
+  allPosts: any;
 
-  ngOnInit(){
+  constructor(private postService: PostService, private snackBar: MatSnackBar) {}
+
+  ngOnInit() {
     this.getAllPosts();
   }
+
   getAllPosts() {
     this.postService.getAllPosts().subscribe(res => {
       console.log(res);
-      
-      
       this.allPosts = res.map((post: { postedBy: string; }) => ({
         ...post,
-        avatar: `assets/img/avatar${post.postedBy}.jpg` 
+        avatar: `assets/img/avatar${post.postedBy}.jpg`   
       }));
     }, error => {
       this.snackBar.open("Something went wrong!!", "Close", { duration: 3000 });
     });
   }
+
   deletePost(postId: number) {
     if (confirm("Are you sure you want to delete this post?")) {
       this.postService.deletePostById(postId).subscribe(
         () => {
-          this.snackBar.open("Post deleted successfully!", "Close", { duration: 3000 });
-          
          
-          this.allPosts = this.allPosts.filter((post: { id: number }) => post.id !== postId);
+          this.snackBar.open("Post deleted successfully!", "Close", { duration: 3000 });
+          this.getAllPosts();  
         },
-        error => {
+        (error) => {
           this.snackBar.open("Something went wrong!!", "Close", { duration: 3000 });
         }
       );
     }
   }
   
-
-  
-
 }

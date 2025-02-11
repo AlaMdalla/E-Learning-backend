@@ -43,10 +43,11 @@ public class PostServiceImpl implements PostService{
     }
     public void deletePost(Long postId) {
         if (!postRepository.existsById(postId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post with ID " + postId + " not found");
         }
         postRepository.deleteById(postId);
     }
+
 
 
 }

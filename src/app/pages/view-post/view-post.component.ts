@@ -15,6 +15,7 @@ export class ViewPostComponent {
   postId = this.activatedRoute.snapshot.params['id'];
   postData : any;
   CommentForm! :FormGroup;
+  comments:any
   
 
 
@@ -50,11 +51,24 @@ publishComment(){
 
 getPostById() {
   this.postService.getPostById(this.postId).subscribe(res => {
+    this.getCommentByPost();
     this.postData = {
       ...res,
       avatar: `assets/img/avatar${res.postedBy}.jpg`  
     };
     console.log(this.postData);
+  }, error => {
+    this.matsnackBar.open("Something went wrong!!");
+  });
+}
+getCommentByPost(){
+  this.commentService.getAllCommentByPost(this.postId).subscribe(res => {
+    this.comments = res.map((comment: { postedBy: any; }) => {
+      return {
+        ...comment,
+        avatar: `assets/img/avatar${comment.postedBy}.jpg`  
+      };
+    });
   }, error => {
     this.matsnackBar.open("Something went wrong!!");
   });

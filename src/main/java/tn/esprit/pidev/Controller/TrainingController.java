@@ -1,5 +1,7 @@
 package tn.esprit.pidev.Controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.pidev.Entity.Training;
 import tn.esprit.pidev.Service.TrainingServiceImp;
@@ -14,23 +16,29 @@ public class TrainingController {
             this.trainingServiceImp = trainingServiceImp;
         }
 
-        @GetMapping
+        @GetMapping("/retrieve-all-trainings")
         public List<Training> getAllTrainings() {
             return trainingServiceImp.getAllTrainings();
         }
 
-        @GetMapping("/{id}")
+        @GetMapping("/{idTraining}")
         public Training getTrainingById(@PathVariable int idTraining) {
             return trainingServiceImp.getTrainingById(idTraining);
         }
 
-        @PostMapping
-        public Training createTraining(@RequestBody Training training) {
-            return trainingServiceImp.saveTraining(training);
-        }
+    @PostMapping("/add-training")
+    public ResponseEntity<Training> addTraining(@RequestBody Training training) {
+        Training createdTraining = trainingServiceImp.saveTraining(training);
+        return new ResponseEntity<>(createdTraining, HttpStatus.CREATED);
+    }
 
-        @DeleteMapping("/{id}")
-        public void deleteTraining(@PathVariable int idTraining) {
-            trainingServiceImp.deleteTraining(idTraining);
-        }
-}
+    @PutMapping("/modify-training")
+    public Training modifyTraining(@RequestBody Training training) {
+        return trainingServiceImp.saveTraining(training);
+    }
+
+    // DELETE training
+    @DeleteMapping("/remove-training/{training-id}")
+    public void removeTraining(@PathVariable("training-id") int id) {
+        trainingServiceImp.deleteTraining(id);
+    }}

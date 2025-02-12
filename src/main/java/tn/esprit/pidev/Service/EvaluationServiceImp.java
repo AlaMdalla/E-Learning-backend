@@ -17,26 +17,27 @@ public class EvaluationServiceImp implements IEvaluationService{
 
     @Override
     public Evaluation addEvaluation(Evaluation evaluation) {
-        return null;
+        return evaluationRepository.save(evaluation);
     }
 
     @Override
     public Evaluation updateEvaluation(int idEvaluation, Evaluation evaluation) {
-        return null;
+        return evaluationRepository.save(evaluation);
     }
 
     @Override
     public void deleteEvaluation(int idEvaluation) {
+        evaluationRepository.deleteById(idEvaluation);
 
     }
 
     @Override
     public Evaluation getEvaluationById(int idEvaluation) {
-        return null;
+        return evaluationRepository.findById(idEvaluation).orElse(null);
     }
 
     @Override
     public List<Evaluation> getAllEvaluations() {
-        return List.of();
+        return evaluationRepository.findAll();
     }
 }

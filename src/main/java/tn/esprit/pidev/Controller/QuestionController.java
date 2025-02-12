@@ -1,6 +1,7 @@
 package tn.esprit.pidev.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.pidev.Entity.Question;
@@ -20,35 +21,37 @@ public class QuestionController {
     }
 
     // Récupérer toutes les questions
-    @GetMapping("/all")
-    public List<Question> getAllQuestions() {
-        return questionService.getAllQuestions();
+    @GetMapping("/retrieve-all-questions")
+    public ResponseEntity<List<Question>> getQuestions() {
+        List<Question> questions = questionService.getAllQuestions();
+        return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
     // Récupérer une question par ID
-    @GetMapping("/{questionId}")
-    public ResponseEntity<Question> getQuestionById(@PathVariable int questionId) {
-        Question question = questionService.getQuestionById(questionId);
-        return question != null ? ResponseEntity.ok(question) : ResponseEntity.notFound().build();
+    @GetMapping("/retrieve-question/{question-id}")
+    public ResponseEntity<Question> retrieveQuestion(@PathVariable("question-id") int id) {
+        Question question = questionService.getQuestionById(id);
+        return (question != null) ? new ResponseEntity<>(question, HttpStatus.OK) :
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    // Ajouter une nouvelle question
+
     @PostMapping("/add")
     public ResponseEntity<Question> addQuestion(@RequestBody Question question) {
-        Question newQuestion = questionService.addQuestion(question);
-        return ResponseEntity.ok(newQuestion);
+        Question createdQuestion = questionService.addQuestion(question);
+        return new ResponseEntity<>(createdQuestion, HttpStatus.CREATED);
     }
 
     // Modifier une question
-    @PutMapping("/update/{questionId}")
-    public ResponseEntity<Question> updateQuestion(@PathVariable int questionId, @RequestBody Question question) {
-        Question updatedQuestion = questionService.updateQuestion(questionId, question);
-        return updatedQuestion != null ? ResponseEntity.ok(updatedQuestion) : ResponseEntity.notFound().build();
+    @PutMapping("/modify-question/{question-id}")
+    public ResponseEntity<Question> modifyQuestion(@PathVariable("question-id") int id, @RequestBody Question question) {
+        Question updatedQuestion = questionService.updateQuestion(id, question);
+        return new ResponseEntity<>(updatedQuestion, HttpStatus.OK);
     }
 
     // Supprimer une question
-    @DeleteMapping("/delete/{questionId}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable int questionId) {
-        questionService.deleteQuestion(questionId);
-        return ResponseEntity.noContent().build();
-    } }
+    @DeleteMapping("/remove-question/{question-id}")
+    public ResponseEntity<Void> removeQuestion(@PathVariable("question-id") int id) {
+        questionService.deleteQuestion(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }}

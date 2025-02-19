@@ -17,6 +17,7 @@ export class ViewPostComponent {
   CommentForm! :FormGroup;
   comments:any
   
+  
 
 
 
@@ -54,8 +55,9 @@ getPostById() {
     this.getCommentByPost();
     this.postData = {
       ...res,
-      avatar: `assets/img/avatar${res.postedBy}.jpg`  
+      avatar: `assets/img/avatar${res.postedBy}.jpg`
     };
+    
     console.log(this.postData);
   }, error => {
     this.matsnackBar.open("Something went wrong!!");
@@ -73,5 +75,18 @@ getCommentByPost(){
     this.matsnackBar.open("Something went wrong!!");
   });
 }
+
+reactPost(){
+  this.postService.reactPost(this.postId).subscribe(res=>{
+    this.matsnackBar.open("Post reacted successfully");
+    if (this.postData) {
+      this.postData.likeCount += 1;
+    }
+
+  },error=>{
+    this.matsnackBar.open("Something Wrong!!");
+  })
+}
+
 
 }

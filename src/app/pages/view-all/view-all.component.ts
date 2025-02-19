@@ -10,6 +10,7 @@ import { PostService } from 'src/app/service/post.service';
 export class ViewAllComponent {
   avatar: any;
   allPosts: any;
+  
 
   constructor(private postService: PostService, private snackBar: MatSnackBar) {}
 
@@ -28,6 +29,7 @@ export class ViewAllComponent {
       this.snackBar.open("Something went wrong!!", "Close", { duration: 3000 });
     });
   }
+  
 
   deletePost(postId: number) {
     if (confirm("Are you sure you want to delete this post?")) {
@@ -43,5 +45,7 @@ export class ViewAllComponent {
       );
     }
   }
+  
+  
   
 }

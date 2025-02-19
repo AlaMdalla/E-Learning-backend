@@ -1,0 +1,13 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.center-card{
+    max-width: 600px;
+    margin: auto;
+    margin-top: 10px;
+    padding: 30px;
+
+}
+
+mat-form-field{
+    width: 100%;
+}

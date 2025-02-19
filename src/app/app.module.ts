@@ -10,13 +10,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ViewAllComponent } from './pages/view-all/view-all.component';
 import { ViewPostComponent } from './pages/view-post/view-post.component';
+import { UpdatePostComponent } from './pages/update-post/update-post.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreatePostComponent,
     ViewAllComponent,
-    ViewPostComponent
+    ViewPostComponent,
+    UpdatePostComponent
+  
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,8 @@ import { ViewPostComponent } from './pages/view-post/view-post.component';
     AngularMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule  
+    HttpClientModule,
+     
   ],
   providers: [],
   bootstrap: [AppComponent]

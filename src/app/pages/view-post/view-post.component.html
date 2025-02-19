@@ -12,8 +12,8 @@
 
         <mat-grid-list cols="5">
             <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <img mat-card-image [src]="postData.img" class="post-img" alt="Card Image" />
-            </mat-grid-tile>
+                <img *ngIf="postData.picByte" [src]="'data:image/jpeg;base64,' + postData.picByte" alt="Post Image" />
+          </mat-grid-tile>
             <mat-grid-tile [colspan]="3" [rowspan]="1">
                 {{ postData.content }}
             </mat-grid-tile>
@@ -22,7 +22,7 @@
         <hr>
 
         <mat-card-actions>
-            <button mat-raised-button color="primary">
+            <button mat-raised-button color="primary" (click)="reactPost()">
                 {{ postData.likeCount }}
                 <mat-icon>favorite</mat-icon>
             </button>

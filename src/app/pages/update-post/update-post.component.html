@@ -1,0 +1,56 @@
+<mat-card class="center-card">
+    <mat-card-content>
+      <form [formGroup]="postForm" (ngSubmit)="updatePost()">
+        <mat-form-field appearance="fill">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Posted By</mat-label>
+          <input matInput formControlName="postedBy">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Content</mat-label>
+          <textarea matInput rows="5" formControlName="content"></textarea>
+        </mat-form-field>
+  
+        <mat-label>Image</mat-label>
+        <input type="file" (change)="onFileChanged($event)" />
+  
+        <div class="col-md-6">
+          <input type="button" (click)="onUpload()" value="Upload">
+        </div>
+  
+        <hr />
+        <div class="container row">
+          <div class="col-md-12">
+            <div *ngIf="message">{{ message }}</div>
+          </div>
+        </div>
+  
+        <div class="container row">
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="name" placeholder="Image name" formControlName="img" />
+          </div>
+          <div class="col-md-6">
+            <input type="button" (click)="getImage()" value="Get Image">
+          </div>
+        </div>
+  
+        <div class="container row">
+          <div class="col-md-12">
+            <div *ngIf="retrievedImage">
+              <img [src]="retrievedImage">
+            </div>
+          </div>
+        </div>
+  
+        <button mat-raised-button color="primary" style="float: right;" [disabled]="!postForm.valid">
+          Update Post
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

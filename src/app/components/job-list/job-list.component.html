@@ -1,0 +1,9 @@
+<h2>Job List</h2>
+<button routerLink="/jobs/new">Add Job</button> <!-- Corrected routing -->
+<ul>
+  <li *ngFor="let job of jobs">
+    {{ job.title }}
+    <button [routerLink]="['/jobs/edit', job.jobId]">Edit</button>
+    <button (click)="deleteJob(job.jobId)">Delete</button>
+  </li>
+</ul>

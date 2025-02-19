@@ -1,0 +1,38 @@
+import { Component, OnInit } from '@angular/core';
+import { JobService } from '../../services/job.service';
+import { Job } from '../../models/Job';
+import { ActivatedRoute, Router } from '@angular/router';
+
+@Component({
+  selector: 'app-job-form',
+  templateUrl: './job-form.component.html',
+  styleUrls: ['./job-form.component.css'],
+})
+export class JobFormComponent implements OnInit {
+  job: Job = new Job();
+
+  constructor(
+    private jobService: JobService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.jobService.getJobById(+id).subscribe((data) => (this.job = data));
+    }
+  }
+
+  saveJob(): void {
+    if (this.job.jobId) {
+      this.jobService.updateJob(this.job.jobId, this.job).subscribe(() => {
+        this.router.navigate(['/jobs']);
+      });
+    } else {
+      this.jobService.createJob(this.job).subscribe(() => {
+        this.router.navigate(['/jobs']);
+      });
+    }
+  }
+}

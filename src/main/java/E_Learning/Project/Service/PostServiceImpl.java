@@ -69,6 +69,7 @@ public class PostServiceImpl implements PostService{
         Optional.ofNullable(updatedPost.getContent()).ifPresent(existingPost::setContent);
         Optional.ofNullable(updatedPost.getPostedBy()).ifPresent(existingPost::setPostedBy);
         Optional.ofNullable(updatedPost.getImg()).ifPresent(existingPost::setImg);
+        Optional.ofNullable(updatedPost.getCategory()).ifPresent(existingPost::setCategory);
 
         return postRepository.save(existingPost);
     }

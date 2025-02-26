@@ -18,7 +18,10 @@ public class Post {
 
     private Long id;
 
+
     private String title;
+
+    private String category;
 
     private String content;
 
@@ -43,9 +46,10 @@ public class Post {
     @Column(name = "type")
     private String type;
     public Post(){}
-    public Post(Long id, String title, String content, String postedBy, byte[] img, Date date, int viewCount, int likeCount, byte[] picByte, String name, String type, List<Comment> comments) {
+    public Post(Long id, String title,String category, String content, String postedBy, byte[] img, Date date, int viewCount, int likeCount, byte[] picByte, String name, String type, List<Comment> comments) {
         this.id = id;
         this.title = title;
+        this.category = category;
         this.content = content;
         this.postedBy = postedBy;
         this.img = img;
@@ -73,6 +77,14 @@ public class Post {
     public void setTitle(String title) {
         this.title = title;
     }
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
 
     public String getContent() {
         return content;

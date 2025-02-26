@@ -111,7 +111,8 @@ public Post img;
                                         @RequestParam(value = "imageFile", required = false) MultipartFile file,
                                         @RequestParam("title") String title,
                                         @RequestParam("content") String content,
-                                        @RequestParam("postedBy") String postebBy) {
+                                        @RequestParam("postedBy") String postebBy,
+                                        @RequestParam("category") String category) {
         try {
             // Récupérer le post sans modifier viewCount
             Post existingPost = postService.getPostByIdAndUpdating(postId);

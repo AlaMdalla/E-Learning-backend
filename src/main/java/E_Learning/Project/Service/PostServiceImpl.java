@@ -49,6 +49,11 @@ public class PostServiceImpl implements PostService{
             throw new EntityNotFoundException("Post not Found");
         }
     }
+    public Post getPostByIdAndUpdating(Long postId) {
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("Post not Found"));
+    }
+
     public void deletePost(Long postId) {
         if (!postRepository.existsById(postId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post with ID " + postId + " not found");
@@ -68,14 +73,7 @@ public class PostServiceImpl implements PostService{
         return postRepository.save(existingPost);
     }
 
-    private byte[] compressBytes(byte[] bytes) {
-        try {
-            // Your compression logic goes here (e.g., using Java's Deflater or another library)
-            return CompressionUtil.compress(bytes); // Assuming CompressionUtil is the class handling compression
-        } catch (IOException e) {
-            throw new RuntimeException("Error compressing image", e);
-        }
-    }
+
 
     public void reactPost(Long postId){
         Optional<Post> optionalPost = postRepository.findById(postId);
@@ -89,12 +87,6 @@ public class PostServiceImpl implements PostService{
         }
 
     }
-
-
-
-
-
-
 
 
 }

@@ -13,26 +13,27 @@ import java.util.List;
 @Entity
 @Data
 public class Post {
-        @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
 
-        private String title;
+    private String title;
 
-        private String content;
+    private String content;
 
-        private String postedBy;
+    private String postedBy;
 
     @Lob // Annotation pour indiquer que c'est un type large, comme un BLOB
     private byte[] img;
 
 
-        private Date date;
+    private Date date;
 
-        private int viewCount;
+    private int viewCount;
 
-        private int likeCount;
+    private int likeCount;
+
     @Lob
     @Column(name = "picByte", columnDefinition = "LONGBLOB")
     private byte[] picByte;
@@ -41,7 +42,7 @@ public class Post {
 
     @Column(name = "type")
     private String type;
-public Post(){}
+    public Post(){}
     public Post(Long id, String title, String content, String postedBy, byte[] img, Date date, int viewCount, int likeCount, byte[] picByte, String name, String type, List<Comment> comments) {
         this.id = id;
         this.title = title;
@@ -164,7 +165,6 @@ public Post(){}
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Comment> comments;
-
 
 
 }

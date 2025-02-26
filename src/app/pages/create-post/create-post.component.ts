@@ -32,6 +32,7 @@ export class CreatePostComponent implements OnInit {
       title: [null, Validators.required],
       content: [null, [Validators.required, Validators.maxLength(5000)]],
       postedBy: [null, Validators.required],
+      category: [null, Validators.required],
       img: [null]
       
     });
@@ -49,6 +50,7 @@ export class CreatePostComponent implements OnInit {
     formData.append('content', this.postForm.value.content);
     formData.append('postedBy', this.postForm.value.postedBy);
     formData.append('img', this.postForm.value.img);
+    formData.append('category', this.postForm.value.category);
     formData.append('imageFile', this.selectedFile, this.selectedFile.name); 
   
     this.postService.createNewPost(formData).subscribe(

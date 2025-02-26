@@ -41,6 +41,7 @@ export class UpdatePostComponent implements OnInit {
       title: ['', Validators.required],
       postedBy: ['', Validators.required],
       content: ['', Validators.required],
+      category: ['', Validators.required],
       img: ['']
       
     });
@@ -55,6 +56,7 @@ export class UpdatePostComponent implements OnInit {
         postedBy: post.postedBy,
         content: post.content,
         img: post.img,
+        category: post.category
       });
       // Charger l'image si nécessaire
       if (post.img) {
@@ -76,6 +78,7 @@ export class UpdatePostComponent implements OnInit {
     formData.append('title', this.postForm.get('title')?.value || '');
     formData.append('postedBy', this.postForm.get('postedBy')?.value || '');
     formData.append('content', this.postForm.get('content')?.value || '');
+    formData.append('category', this.postForm.get('category')?.value || '');
   
     if (this.selectedFile) {
       formData.append('imageFile', this.selectedFile);

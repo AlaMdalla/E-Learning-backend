@@ -17,11 +17,10 @@
         </mat-form-field>
   
         <mat-label>Image</mat-label>
-        <input type="file" (change)="onFileChanged($event)" />
+        <input type="file" (change)="onFileChanged($event)">
+                <img *ngIf="previewUrl" [src]="previewUrl" alt="Prévisualisation" width="200">
   
-        <div class="col-md-6">
-          <input type="button" (click)="onUpload()" value="Upload">
-        </div>
+       
   
         <hr />
         <div class="container row">
@@ -31,21 +30,11 @@
         </div>
   
         <div class="container row">
-          <div class="col-md-6">
-            <input type="text" class="form-control" id="name" placeholder="Image name" formControlName="img" />
-          </div>
-          <div class="col-md-6">
-            <input type="button" (click)="getImage()" value="Get Image">
-          </div>
+         
+          
         </div>
   
-        <div class="container row">
-          <div class="col-md-12">
-            <div *ngIf="retrievedImage">
-              <img [src]="retrievedImage">
-            </div>
-          </div>
-        </div>
+        
   
         <button mat-raised-button color="primary" style="float: right;" [disabled]="!postForm.valid">
           Update Post

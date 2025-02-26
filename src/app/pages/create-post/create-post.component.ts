@@ -14,11 +14,10 @@ export class CreatePostComponent implements OnInit {
 
   postForm!: FormGroup;
   selectedFile!: File;
-  retrievedImage: any;
-  base64Data: any;
   retrieveResonse: any;
   message!: string;
   img: any;
+  previewUrl!: string | ArrayBuffer | null;
 
   constructor(
     private fb: FormBuilder,
@@ -62,17 +61,6 @@ export class CreatePostComponent implements OnInit {
       }
     );
   }
-  
-  public onFileChanged(event: Event) {
-    const input = event.target as HTMLInputElement;
-  
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-    }
-  }
-  
-
-  //Gets called when the user clicks on submit to upload the image
   onUpload() {
     if (!this.selectedFile) {
         console.log("Aucune image sélectionnée !");
@@ -101,23 +89,19 @@ export class CreatePostComponent implements OnInit {
         }
       });
 }
+  
+  public onFileChanged(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
 
-
-  //Gets called when the user clicks on retieve image button to get the image from back end
-  getImage() {
-    this.img=this.postForm.get('img')?.value;
-    //Make a call to Sprinf Boot to get the Image Bytes.
-    this.httpClient.get('http://localhost:8082/blog/posts/get/' + this.img)
-      .subscribe(
-        res => {
-          this.retrieveResonse = res;
-          this.base64Data = this.retrieveResonse.picByte;
-          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-        }
-      );
+      // Générer une prévisualisation de l'image
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
   }
-
-  
-
-  
+ 
 }

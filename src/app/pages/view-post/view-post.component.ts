@@ -78,13 +78,13 @@ getCommentByPost(){
 
 reactPost(){
   this.postService.reactPost(this.postId).subscribe(res=>{
-    this.matsnackBar.open("Post reacted successfully");
+    this.matsnackBar.open("Post reacted successfully","Close", { duration: 3000 });
     if (this.postData) {
       this.postData.likeCount += 1;
     }
 
   },error=>{
-    this.matsnackBar.open("Something Wrong!!");
+    this.matsnackBar.open("Something Wrong!!","Close", { duration: 3000 });
   })
 }
 

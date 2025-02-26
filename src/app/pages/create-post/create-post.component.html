@@ -8,13 +8,6 @@
                     <mat-label>Title</mat-label>
                     <input matInput formControlName="title">
                 </mat-form-field>
-
-               
-                    
-
-               
-                
-
                 <mat-form-field appearance="fill">
                     <mat-label>Posted By</mat-label>
                     <input matInput formControlName="postedBy">
@@ -25,39 +18,15 @@
                     <textarea matInput rows="5" formControlName="content"></textarea>
                 </mat-form-field>
                 <mat-label>Image</mat-label>
-                    <input type="file" (change)="onFileChanged($event)" />
-                   
-                        <div class="col-md-6">
-                            <input type="button" (click)="onUpload()" value="upload">
-                        </div>
-                    
-                    <hr />
-                    <div class="container row">
-                        <div class="col-md-12">
-                            <div *ngIf=message>{{message}}</div>
-                        </div>
-                    </div>
-                    
-                    <div class="container row">
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" id="name" placeholder="image name" formControlName="img" />
-                            
-                        </div>
-                        <div class="col-md-6">
-                            <input type="button" (click)="getImage()" value="Get Image">
-                    
-                        </div>
-                    </div>
-                    <div class="container row">
-                        <div class="col-md-12">
-                            <div *ngIf=retrievedImage>
-                                <img [src]="retrievedImage">
-                            </div>
-                        </div>
-                    </div>
-
-            
                 
+                <input type="file" (change)="onFileChanged($event)">
+                <div class="col-md-6">
+                    <input type="button" (click)="onUpload()" value="upload">
+                </div>
+                <img *ngIf="previewUrl" [src]="previewUrl" alt="Prévisualisation" width="200">
+  
+                    <hr />
+     
                 <button mat-raised-button color="primary" style="float: right;" [disabled]="!postForm.valid" (click)="createPost()">
                     Create New Post
                   </button>

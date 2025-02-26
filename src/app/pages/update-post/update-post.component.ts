@@ -16,10 +16,10 @@ export class UpdatePostComponent implements OnInit {
   message: string = '';
   retrievedImage: string | undefined;
   selectedFile!: File;
-  base64Data: any;
   retrieveResonse: any;
   img: any;
-  imageBase64: string | undefined;
+  
+  previewUrl!: string | ArrayBuffer | null;
 
   constructor(
     private route: ActivatedRoute,
@@ -67,77 +67,46 @@ export class UpdatePostComponent implements OnInit {
 
   // Fonction pour mettre à jour le post
   updatePost() {
-    if (this.postForm.valid) {
-      // Si une image est sélectionnée, l'ajouter en base64 dans le formulaire
-      if (this.imageBase64) {
-        this.postForm.get('img')?.setValue(this.imageBase64);
-      }
-
-      this.postService.updatePost(this.postId, this.postForm.value).subscribe(() => {
-        this.snackBar.open("Post updated successfully!", "Close", { duration: 3000 });
-      }, error => {
-        this.snackBar.open("Failed to update post!", "Close", { duration: 3000 });
-      });
+    if (this.postForm.invalid) {
+      this.snackBar.open("Please fill all required fields!", "Close", { duration: 3000 });
+      return;
     }
+  
+    const formData = new FormData();
+    formData.append('title', this.postForm.get('title')?.value || '');
+    formData.append('postedBy', this.postForm.get('postedBy')?.value || '');
+    formData.append('content', this.postForm.get('content')?.value || '');
+  
+    if (this.selectedFile) {
+      formData.append('imageFile', this.selectedFile);
+    }
+  
+    this.postService.updatePost(this.postId, formData).subscribe({
+      next: () => {
+        this.snackBar.open("Post updated successfully!", "Close", { duration: 3000 });
+      },
+      error: (error) => {
+        console.error("Error updating post:", error);
+        this.snackBar.open("Failed to update post!", "Close", { duration: 3000 });
+      }
+    });
   }
+  
 
   // Méthode appelée lorsque l'utilisateur sélectionne un fichier
   public onFileChanged(event: Event) {
     const input = event.target as HTMLInputElement;
-  
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
 
-      // Convertir l'image en base64
+      // Générer une prévisualisation de l'image
       const reader = new FileReader();
-      reader.readAsDataURL(this.selectedFile);
       reader.onload = () => {
-        this.imageBase64 = reader.result?.toString().split(',')[1]; // Extraire la partie base64
-        console.log('Base64 Image:', this.imageBase64);
+        this.previewUrl = reader.result;
       };
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 
-  // Méthode appelée pour télécharger l'image vers le backend
-  onUpload() {
-    if (!this.selectedFile) {
-      console.log("Aucune image sélectionnée !");
-      this.message = "Aucune image sélectionnée !";
-      return;
-    }
-
-    console.log("Fichier à uploader :", this.selectedFile);
-
-    const uploadImageData = new FormData();
-    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
-
-    this.httpClient.post('http://localhost:8082/blog/posts/upload', uploadImageData, { observe: 'response' })
-      .subscribe({
-        next: (response) => {
-          console.log("Réponse de l'API :", response);
-          if (response.status === 200) {
-            this.message = 'Image uploaded successfully';
-          } else {
-            this.message = 'Image not uploaded successfully';
-          }
-        },
-        error: (error) => {
-          console.error("Erreur lors de l'upload :", error);
-          this.message = 'Erreur lors de l\'upload de l\'image';
-        }
-      });
-  }
-
-  // Méthode appelée pour récupérer l'image depuis le backend
-  getImage() {
-    this.img = this.postForm.get('img')?.value;
-    this.httpClient.get('http://localhost:8082/blog/posts/get/' + this.img)
-      .subscribe(
-        res => {
-          this.retrieveResonse = res;
-          this.base64Data = this.retrieveResonse.picByte;
-          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-        }
-      );
-  }
+ 
 }

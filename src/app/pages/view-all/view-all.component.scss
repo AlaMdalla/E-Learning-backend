@@ -29,7 +29,7 @@ mat-card-footer{
 .post-img{
     width: 300px;
     height: 200px;
-    object-fit: cover;
+    object-fit: contain;
     margin-top: 15px;
 }
 .close-button {

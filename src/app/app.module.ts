@@ -12,6 +12,8 @@ import { ViewAllComponent } from './pages/view-all/view-all.component';
 import { ViewPostComponent } from './pages/view-post/view-post.component';
 import { UpdatePostComponent } from './pages/update-post/update-post.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { ReclamationComponent } from './reclamation/reclamation.component';
+import { ListreclamationComponent } from './pages/listreclamation/listreclamation.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
     CreatePostComponent,
     ViewAllComponent,
     ViewPostComponent,
-    UpdatePostComponent
+    UpdatePostComponent,
+    ReclamationComponent,
+    ListreclamationComponent
   
   ],
   imports: [

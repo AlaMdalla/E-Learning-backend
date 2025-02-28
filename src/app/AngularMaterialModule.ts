@@ -26,7 +26,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatPaginatorModule,
     MatMenuModule,
     MatGridListModule,
-    MatChipsModule
+    MatChipsModule,
+    
   ]
 })
 export class AngularMaterialModule {}

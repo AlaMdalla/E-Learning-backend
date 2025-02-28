@@ -1,0 +1,30 @@
+<div class="reclamation-form-container">
+    <h2>Report a Problem</h2>
+    <form [formGroup]="reclamationForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Reason</mat-label>
+        <textarea matInput formControlName="reason" placeholder="Describe the issue..." required></textarea>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" placeholder="Enter your email" required type="email">
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter your name" required>
+      </mat-form-field>
+  
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!reclamationForm.valid">
+          <mat-icon>send</mat-icon> Submit
+        </button>
+        <button mat-raised-button (click)="router.navigate(['/view-post', postId])" color="warn">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  

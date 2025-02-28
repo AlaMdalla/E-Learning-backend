@@ -1,0 +1,30 @@
+<mat-card class="reclamation-table" *ngIf="reclamations.length">
+    <mat-card-header>
+      <mat-card-title>Reclamations List</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let column of displayedColumns">{{ column }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reclamation of reclamations">
+            <td>{{ reclamation.reason }}</td>
+            <td>{{ reclamation.email }}</td>
+            <td>{{ reclamation.name }}</td>
+            <td>{{ reclamation.createdAt | date: 'medium' }}</td>
+            <td>
+              <button mat-icon-button color="primary" (click)="updateReclamation(reclamation.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteReclamation(reclamation.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+  </mat-card>

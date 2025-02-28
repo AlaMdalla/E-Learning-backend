@@ -28,6 +28,9 @@
         <button mat-raised-button color="primary" style="margin-left: 5px;">
           {{ postData.viewCount }} <mat-icon>remove_red_eye</mat-icon>
         </button>
+        <button mat-raised-button color="warn" (click)="goToReclamationForm()" style="margin-left: 5px;">
+        <mat-icon>report</mat-icon> Report
+      </button>
       </mat-card-actions>
     </mat-card>
   

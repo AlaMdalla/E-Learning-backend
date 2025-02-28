@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PostService } from 'src/app/service/post.service';
@@ -10,6 +11,7 @@ import { PostService } from 'src/app/service/post.service';
 export class ViewAllComponent {
   avatar: any;
   allPosts: any;
+  
   
 
   constructor(private postService: PostService, private snackBar: MatSnackBar) {}
@@ -29,6 +31,9 @@ export class ViewAllComponent {
       this.snackBar.open("Something went wrong!!", "Close", { duration: 3000 });
     });
   }
+  
+  
+  
   
 
   deletePost(postId: number) {

@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ViewAllComponent } from './pages/view-all/view-all.component';
 import { ViewPostComponent } from './pages/view-post/view-post.component';
 import { UpdatePostComponent } from './pages/update-post/update-post.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { UpdatePostComponent } from './pages/update-post/update-post.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxPaginationModule
      
   ],
   providers: [],

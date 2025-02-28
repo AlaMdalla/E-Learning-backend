@@ -34,6 +34,27 @@ public class CommentServiceImpl implements CommentService{
         }
         throw new EntityNotFoundException("Post Not Found");
     }
+    public Comment replyToComment(Long parentCommentId, String postedBy, String content) {
+        Optional<Comment> optionalParentComment = commentRepository.findById(parentCommentId);
+        if (optionalParentComment.isPresent()) {
+            Comment parentComment = optionalParentComment.get();
+            Comment reply = new Comment();
+            reply.setParentComment(parentComment); // Link to the parent comment
+            reply.setPost(parentComment.getPost()); // Ensure the reply is tied to the same post
+            reply.setContent(content);
+            reply.setPostedBy(postedBy);
+            reply.setCreatedAt(new Date());
+
+            // Save the reply and add it to the parent's replies list
+            Comment savedReply = commentRepository.save(reply);
+            parentComment.getReplies().add(savedReply);
+            commentRepository.save(parentComment); // Update the parent with the new reply
+
+            return savedReply;
+        }
+        throw new EntityNotFoundException("Parent Comment Not Found");
+    }
+
     public List<Comment> getCommentByPostId(Long postId){
         return commentRepository.findByPostId(postId);
     }

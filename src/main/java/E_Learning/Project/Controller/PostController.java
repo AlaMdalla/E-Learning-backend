@@ -1,5 +1,6 @@
 package E_Learning.Project.Controller;
 
+
 import E_Learning.Project.Entity.CompressionUtil;
 import E_Learning.Project.Entity.Post;
 import E_Learning.Project.Repository.PostRepository;
@@ -24,6 +25,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -48,12 +50,6 @@ public Post img;
             System.out.println("⚠️ Aucun fichier reçu !");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fichier vide !");
         }
-
-        // Log pour vérifier que le fichier est bien reçu
-        System.out.println("✅ Fichier reçu : " + file.getOriginalFilename());
-        System.out.println("Taille du fichier : " + file.getSize());
-        System.out.println("Type de fichier : " + file.getContentType());
-
         try {
             Post img = new Post(file.getOriginalFilename(), file.getContentType(),
                     compressBytes(file.getBytes())); // Vérifie la méthode compressBytes ici
@@ -83,14 +79,14 @@ public Post img;
     }
     private byte[] compressBytes(byte[] bytes) {
         try {
-            // Your compression logic goes here (e.g., using Java's Deflater or another library)
-            return CompressionUtil.compress(bytes); // Assuming CompressionUtil is the class handling compression
+
+            return CompressionUtil.compress(bytes);
         } catch (IOException e) {
             throw new RuntimeException("Error compressing image", e);
         }
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping
     public ResponseEntity<?> createPost(@ModelAttribute Post post, @RequestParam("imageFile") MultipartFile file) {
         try {
             // Compress the image before setting it in the post
@@ -121,6 +117,7 @@ public Post img;
             existingPost.setTitle(title);
             existingPost.setContent(content);
             existingPost.setPostedBy(postebBy);
+            existingPost.setCategory(category);
 
             // Mettre à jour l'image si une nouvelle est fournie
             if (file != null && !file.isEmpty()) {
@@ -141,6 +138,16 @@ public Post img;
     }
 
 
+    @GetMapping("/{id}/image")
+    public ResponseEntity<byte[]> getPostImage(@PathVariable Long id) {
+        try {
+            Post post = postService.getPostById(id);
+            byte[] image = decompressBytes(post.getPicByte());
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
     @GetMapping
@@ -154,6 +161,9 @@ public Post img;
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+
+
     @GetMapping("/{postId}")
     public ResponseEntity<?> getPostById(@PathVariable Long postId) {
         try {

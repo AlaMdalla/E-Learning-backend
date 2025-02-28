@@ -37,7 +37,9 @@ public class Post {
 
     private int likeCount;
 
-    @Lob
+
+
+     @Lob
     @Column(name = "picByte", columnDefinition = "LONGBLOB")
     private byte[] picByte;
     @Column(name = "name")
@@ -177,6 +179,13 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Reclamation> reclamations;
+
+
+
 
 
 }

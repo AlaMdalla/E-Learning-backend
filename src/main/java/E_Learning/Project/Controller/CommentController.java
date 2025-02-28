@@ -31,5 +31,16 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something Wrong");
         }
     }
+    @PostMapping("comments/reply")
+    public ResponseEntity<?> replyToComment(@RequestParam Long parentCommentId,
+                                            @RequestParam String postedBy,
+                                            @RequestParam String content) {
+        try {
+            return ResponseEntity.ok(commentService.replyToComment(parentCommentId, postedBy, content));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
+        }
+    }
+
 
 }

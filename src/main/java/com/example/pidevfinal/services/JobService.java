@@ -28,11 +28,13 @@ public class JobService {
     public void deleteJob(Long id) {
         jobRepository.deleteById(id);
     }
+
     public Job updateJob(Long id, Job jobDetails) {
         return jobRepository.findById(id).map(job -> {
             job.setTitle(jobDetails.getTitle());
             job.setDepartment(jobDetails.getDepartment());
             job.setLocation(jobDetails.getLocation());
+            job.setImage(jobDetails.getImage());
             job.setDescription(jobDetails.getDescription());
             job.setRequirements(jobDetails.getRequirements());
             job.setPostedDate(jobDetails.getPostedDate());
@@ -40,6 +42,4 @@ public class JobService {
             return jobRepository.save(job);
         }).orElse(null);
     }
-
 }
-

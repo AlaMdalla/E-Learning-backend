@@ -1,15 +1,10 @@
 <h2>Candidate List</h2>
 <button routerLink="/candidates/new">Add Candidate</button>
-
-<ul *ngIf="candidates.length > 0; else noCandidates">
+<ul>
   <li *ngFor="let candidate of candidates">
-    <span>ID: {{ candidate.id ?? 'No ID' }}</span>
-    <span>resumeUrl: {{ candidate.resumeUrl ?? 'no resumeUrl' }}</span>
+    {{ candidate.email }} - {{ candidate.phone }} - {{ candidate.status }} - {{ candidate.jobTitle }} -
+    <a [href]="candidate.resumeUrl" target="_blank">Resume</a>
     <button [routerLink]="['/candidates/edit', candidate.id]">Edit</button>
     <button (click)="deleteCandidate(candidate.id)">Delete</button>
   </li>
 </ul>
-
-<ng-template #noCandidates>
-  <p>No candidates found.</p>
-</ng-template>

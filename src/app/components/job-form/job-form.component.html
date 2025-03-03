@@ -14,7 +14,13 @@
 
     <div class="form-group">
       <label>Location</label>
-      <input type="text" class="form-control" [(ngModel)]="job.location" name="location" required />
+      <input type="text" class="form-control" [(ngModel)]="job.location" name="location" placeholder="e.g., 123 Main St, New York, NY" required />
+    </div>
+
+    <div class="form-group">
+      <label>Image</label>
+      <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
+      <img *ngIf="job.image" [src]="job.image" alt="Job Image" style="max-width: 200px;" />
     </div>
 
     <div class="form-group">
@@ -24,12 +30,19 @@
 
     <div class="form-group">
       <label>Requirements</label>
-      <textarea class="form-control" [(ngModel)]="job.requirements" name="requirements"></textarea>
+      <textarea class="form-control" [(ngModel)]="job.requirements" name="requirements" required></textarea>
     </div>
 
     <div class="form-group">
       <label>Posted Date</label>
-      <input type="datetime-local" class="form-control" [(ngModel)]="job.postedDate" name="postedDate" required />
+      <input
+        type="datetime-local"
+        class="form-control"
+        [ngModel]="job.postedDate | date: 'yyyy-MM-ddTHH:mm'"
+        (ngModelChange)="onDateChange($event)"
+        name="postedDate"
+        required
+      />
     </div>
 
     <div class="form-group">
@@ -45,4 +58,3 @@
     </button>
   </form>
 </div>
-  

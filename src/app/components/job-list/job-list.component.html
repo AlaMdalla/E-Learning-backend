@@ -1,8 +1,10 @@
 <h2>Job List</h2>
-<button routerLink="/jobs/new">Add Job</button> <!-- Corrected routing -->
+<button routerLink="/jobs/new">Add Job</button>
 <ul>
   <li *ngFor="let job of jobs">
-    {{ job.title }}
+    {{ job.title }} - {{ job.department }} - 
+    <a [href]="getGoogleMapsUrl(job.location)" target="_blank">{{ job.location }}</a> -
+    <img *ngIf="job.image" [src]="job.image" alt="Job Image" style="max-width: 100px;" />
     <button [routerLink]="['/jobs/edit', job.jobId]">Edit</button>
     <button (click)="deleteJob(job.jobId)">Delete</button>
   </li>

@@ -11,44 +11,34 @@ export class CandidateListComponent implements OnInit {
   candidates: Candidate[] = [];
 
   constructor(private candidateService: CandidateService) {}
+
   ngOnInit(): void {
+    this.loadCandidates();
+  }
+
+  loadCandidates(): void {
     this.candidateService.getCandidates().subscribe({
       next: (data) => {
         this.candidates = data;
+        this.candidates.forEach(candidate => {
+          if (candidate.resumeUrl && candidate.resumeUrl.endsWith('...')) {
+            this.candidateService.getCandidateResume(candidate.id).subscribe({
+              next: (fullResume) => candidate.resumeUrl = fullResume,
+              error: (err) => console.error('Resume fetch error:', err),
+            });
+          }
+        });
       },
-      error: (err) => console.error('Error fetching candidates:', err)
-    });
-  }
-  
-  
-  
-  
-  
-  
-
-  loadCandidates(): void {
-    this.candidateService.getCandidates().subscribe((data) => {
-      this.candidates = data;
+      error: (err) => console.error('Error fetching candidates:', err),
     });
   }
 
-  deleteCandidate(id: number | undefined): void {
-    if (id === undefined || id === null || id <= 0) {
-      return;
+  deleteCandidate(id: number): void {
+    if (confirm('Are you sure?')) {
+      this.candidateService.deleteCandidate(id).subscribe({
+        next: () => this.loadCandidates(),
+        error: (err) => console.error('Delete error:', err),
+      });
     }
-  
-  
-    this.candidateService.deleteCandidate(id).subscribe({
-      next: () => {
-        confirm('Are you sure you want to delete this candidate?')
-        this.candidates = this.candidates.filter(c => c.id !== id);
-      },
-    });
   }
-  
-  
-  
-  
-  
-  
 }

@@ -1,31 +1,52 @@
 <h2>{{ isEditMode ? 'Edit' : 'Add' }} Candidate</h2>
 
 <form (ngSubmit)="onSubmit()" #candidateForm="ngForm">
+  <div class="form-group">
+    <label>Email:</label>
+    <input type="email" class="form-control" [(ngModel)]="candidate.email" name="email" required />
+  </div>
 
- 
+  <div class="form-group">
+    <label>Phone:</label>
+    <input type="text" class="form-control" [(ngModel)]="candidate.phone" name="phone" required />
+  </div>
 
-  <label>Phone:</label>
-  <input type="text" [(ngModel)]="candidate.phone" name="phone" required />
+  <div class="form-group">
+    <label>Resume:</label>
+    <input type="file" class="form-control" (change)="onFileSelected($event)" accept=".pdf" />
+    <a *ngIf="candidate.resumeUrl" [href]="candidate.resumeUrl" target="_blank">View Resume</a>
+  </div>
 
-  <label>Resume URL:</label>
-  <input type="text" [(ngModel)]="candidate.resumeUrl" name="resumeUrl" required />
+  <div class="form-group">
+    <label>Application Date:</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="candidate.applicationDate"
+      name="applicationDate"
+      required
+    />
+  </div>
 
-  <label>Application Date:</label>
-  <input type="datetime-local" [(ngModel)]="candidate.applicationDate" name="applicationDate" required />
+  <div class="form-group">
+    <label>Status:</label>
+    <select class="form-control" [(ngModel)]="candidate.status" name="status" required>
+      <option value="applied">Applied</option>
+      <option value="reviewed">Reviewed</option>
+      <option value="interviewed">Interviewed</option>
+      <option value="hired">Hired</option>
+      <option value="rejected">Rejected</option>
+    </select>
+  </div>
 
-  <label>Status:</label>
-  <select [(ngModel)]="candidate.status" name="status" required>
-    <option value="applied">Applied</option>
-    <option value="reviewed">Reviewed</option>
-    <option value="interviewed">Interviewed</option>
-    <option value="hired">Hired</option>
-    <option value="rejected">Rejected</option>
-  </select>
+  <div class="form-group">
+    <label>Job:</label>
+    <select class="form-control" [(ngModel)]="candidate.jobId" name="jobId" required>
+      <option *ngFor="let job of jobs" [value]="job.jobId">{{ job.title }}</option>
+    </select>
+  </div>
 
-  <label>Job:</label>
-  <select [(ngModel)]="candidate.jobId" name="jobId" required>
-    <option *ngFor="let job of jobs" [value]="job.jobId">{{ job.title }}</option>
-  </select>
-
-  <button type="submit">{{ isEditMode ? 'Update' : 'Create' }} Candidate</button>
+  <button type="submit" class="btn btn-primary">
+    {{ isEditMode ? 'Update' : 'Create' }} Candidate
+  </button>
 </form>

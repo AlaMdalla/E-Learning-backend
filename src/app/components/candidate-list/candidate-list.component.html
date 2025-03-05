@@ -1,10 +1,68 @@
-<h2>Candidate List</h2>
-<button routerLink="/candidates/new">Add Candidate</button>
-<ul>
-  <li *ngFor="let candidate of candidates">
-    {{ candidate.email }} - {{ candidate.phone }} - {{ candidate.status }} - {{ candidate.jobTitle }} -
-    <a [href]="candidate.resumeUrl" target="_blank">Resume</a>
-    <button [routerLink]="['/candidates/edit', candidate.id]">Edit</button>
-    <button (click)="deleteCandidate(candidate.id)">Delete</button>
-  </li>
-</ul>
+<div class="container mt-5">
+  <div class="card shadow-sm animate__animated animate__fadeIn">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">Candidate Listings</h3>
+      <button class="btn btn-light" routerLink="/candidates/new"><i class="bi bi-plus-lg me-1"></i> Add Candidate</button>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <div class="input-group">
+          <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+          <input type="text" class="form-control" placeholder="Search candidates (email, phone, status...)" [(ngModel)]="searchQuery" (input)="onSearch()">
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover table-striped align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col" (click)="sort('email')" class="sortable">
+                Email <i class="bi" [ngClass]="sortColumn === 'email' ? (sortDirection === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down') : 'bi-arrow-down-up'"></i>
+              </th>
+              <th scope="col" (click)="sort('phone')" class="sortable">
+                Phone <i class="bi" [ngClass]="sortColumn === 'phone' ? (sortDirection === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down') : 'bi-arrow-down-up'"></i>
+              </th>
+              <th scope="col" (click)="sort('status')" class="sortable">
+                Status <i class="bi" [ngClass]="sortColumn === 'status' ? (sortDirection === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down') : 'bi-arrow-down-up'"></i>
+              </th>
+              <th scope="col" (click)="sort('jobTitle')" class="sortable">
+                Job Title <i class="bi" [ngClass]="sortColumn === 'jobTitle' ? (sortDirection === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down') : 'bi-arrow-down-up'"></i>
+              </th>
+              <th scope="col">Resume</th>
+              <th scope="col" class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let candidate of filteredCandidates" class="animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+              <td>{{ candidate.email }}</td>
+              <td>{{ candidate.phone }}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-info': candidate.status === 'applied',
+                  'bg-warning': candidate.status === 'reviewed',
+                  'bg-primary': candidate.status === 'interviewed',
+                  'bg-success': candidate.status === 'hired',
+                  'bg-danger': candidate.status === 'rejected'
+                }">
+                  {{ candidate.status }}
+                </span>
+              </td>
+              <td>{{ candidate.jobTitle }}</td>
+              <td><a [href]="getResumeUrl(candidate.resumeUrl)" target="_blank" class="text-primary">View Resume</a></td>
+              <td class="text-end">
+                <button class="btn btn-primary me-2" [routerLink]="['/candidates/edit', candidate.id]">
+                  <i class="bi bi-pencil me-1"></i> Edit
+                </button>
+                <button class="btn btn-danger" (click)="deleteCandidate(candidate.id)">
+                  <i class="bi bi-trash me-1"></i> Delete
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="filteredCandidates.length === 0">
+              <td colspan="6" class="text-center py-4 text-muted">No candidates found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,11 +1,64 @@
-<h2>Job List</h2>
-<button routerLink="/jobs/new">Add Job</button>
-<ul>
-  <li *ngFor="let job of jobs">
-    {{ job.title }} - {{ job.department }} - 
-    <a [href]="getGoogleMapsUrl(job.location)" target="_blank">{{ job.location }}</a> -
-    <img *ngIf="job.image" [src]="job.image" alt="Job Image" style="max-width: 100px;" />
-    <button [routerLink]="['/jobs/edit', job.jobId]">Edit</button>
-    <button (click)="deleteJob(job.jobId)">Delete</button>
-  </li>
-</ul>
+<div class="container mt-5">
+  <div class="card shadow-sm animate__animated animate__fadeIn">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">Job Listings</h3>
+      <button class="btn btn-light" routerLink="/jobs/new"><i class="bi bi-plus-lg me-1"></i> Add Job</button>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <div class="input-group">
+          <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+          <input type="text" class="form-control" placeholder="Search jobs (title, department, location...)" [(ngModel)]="searchQuery" (input)="onSearch()">
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover table-striped align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col" (click)="sort('title')" class="sortable">
+                Title <i class="bi" [ngClass]="sortColumn === 'title' ? (sortDirection === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down') : 'bi-arrow-down-up'"></i>
+              </th>
+              <th scope="col" (click)="sort('department')" class="sortable">
+                Department <i class="bi" [ngClass]="sortColumn === 'department' ? (sortDirection === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down') : 'bi-arrow-down-up'"></i>
+              </th>
+              <th scope="col" (click)="sort('location')" class="sortable">
+                Location <i class="bi" [ngClass]="sortColumn === 'location' ? (sortDirection === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down') : 'bi-arrow-down-up'"></i>
+              </th>
+              <th scope="col" (click)="sort('status')" class="sortable">
+                Status <i class="bi" [ngClass]="sortColumn === 'status' ? (sortDirection === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down') : 'bi-arrow-down-up'"></i>
+              </th>
+              <th scope="col">Image</th>
+              <th scope="col" class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let job of filteredJobs" class="animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+              <td>{{ job.title }}</td>
+              <td>{{ job.department }}</td>
+              <td><a [href]="getGoogleMapsUrl(job.location)" target="_blank" class="text-primary">{{ job.location }}</a></td>
+              <td>
+                <span class="badge" [ngClass]="{'bg-success': job.status === 'Open', 'bg-danger': job.status === 'Closed'}">
+                  {{ job.status }}
+                </span>
+              </td>
+              <td>
+                <img *ngIf="job.image" [src]="job.image" alt="Job Image" class="img-thumbnail" style="max-width: 80px; max-height: 80px;" />
+              </td>
+              <td class="text-end">
+                <button class="btn btn-primary me-2" [routerLink]="['/jobs/edit', job.jobId]">
+                  <i class="bi bi-pencil me-1"></i> Edit
+                </button>
+                <button class="btn btn-danger" (click)="deleteJob(job.jobId)">
+                  <i class="bi bi-trash me-1"></i> Delete
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="filteredJobs.length === 0">
+              <td colspan="6" class="text-center py-4 text-muted">No jobs found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

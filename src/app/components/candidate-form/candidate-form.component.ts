@@ -29,7 +29,6 @@ export class CandidateFormComponent implements OnInit {
       this.isEditMode = true;
       this.candidateService.getCandidateById(+id).subscribe({
         next: (data) => {
-          console.log('✏️ Editing Candidate:', JSON.stringify(data, null, 2));
           this.candidate = data;
           if (this.candidate.applicationDate) {
             this.candidate.applicationDate = new Date(this.candidate.applicationDate).toISOString().slice(0, 16);
@@ -44,7 +43,6 @@ export class CandidateFormComponent implements OnInit {
     this.jobService.getJobs().subscribe({
       next: (data) => {
         this.jobs = data;
-        // Set default jobId if jobs exist and candidate.jobId is unset
         if (this.jobs.length > 0 && !this.candidate.jobId) {
           this.candidate.jobId = this.jobs[0].jobId;
         }
@@ -61,17 +59,23 @@ export class CandidateFormComponent implements OnInit {
         alert('Resume too large! Max 5MB.');
         return;
       }
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.candidate.resumeUrl = reader.result as string;
-      };
-      reader.readAsDataURL(file);
+      this.candidateService.uploadResume(file).subscribe({
+        next: (url) => {
+          this.candidate.resumeUrl = url; // Set the returned URL
+          console.log('Resume uploaded, URL:', url);
+        },
+        error: (err) => console.error('Error uploading resume:', err),
+      });
     }
   }
 
   onSubmit(): void {
     if (!this.candidate.jobId) {
       alert('Please select a job.');
+      return;
+    }
+    if (!this.candidate.resumeUrl) {
+      alert('Please upload a resume.');
       return;
     }
     const candidateData = {

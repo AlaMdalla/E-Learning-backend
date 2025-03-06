@@ -6,11 +6,12 @@ public class CandidateRequest {
     private Long id;
     private String email;
     private String phone;
-    private String resumeUrl;
+    private String resumeUrl; // File URL
     private Date applicationDate;
     private String status;
     private Long jobId;
 
+    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getEmail() { return email; }

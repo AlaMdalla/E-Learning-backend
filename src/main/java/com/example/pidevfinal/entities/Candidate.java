@@ -13,10 +13,7 @@ public class Candidate {
 
     private String email;
     private String phone;
-
-        @Column(columnDefinition = "MEDIUMTEXT")
-    private String resumeUrl;
-
+    private String resumeUrl; // Now a file URL (e.g., "/attachments/resume_123.pdf")
     private Date applicationDate;
     private String status;
 
@@ -24,7 +21,7 @@ public class Candidate {
     @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 
-
+    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getEmail() { return email; }
